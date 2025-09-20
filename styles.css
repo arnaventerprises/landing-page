@@ -46,9 +46,11 @@ html {
 .header-logo {
     height: 1.4rem; /* Same as h1 font-size */
     width: auto;
+    max-width: 1.4rem; /* Add max-width constraint for desktop */
+    max-height: 1.4rem; /* Add max-height constraint for desktop */
     object-fit: contain;
+    display: block;
 }
-
 .header h1 {
     font-size: 1.4rem;
     font-weight: 600;
