@@ -1,4 +1,6 @@
-/* ARNAV ENTERPRISES - Complete CSS with Updated Clients Section */
+.info-card {
+        padding: 30px 20px;
+    }/* ARNAV ENTERPRISES - Complete CSS with Updated Clients Section */
 
 * {
     margin: 0;
@@ -35,11 +37,24 @@ html {
     align-items: center;
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-logo {
+    height: 1.4rem; /* Same as h1 font-size */
+    width: auto;
+    object-fit: contain;
+}
+
 .header h1 {
     font-size: 1.4rem;
     font-weight: 600;
     color: #ffffff;
     letter-spacing: 0.5px;
+    margin: 0;
 }
 
 .contact-link {
@@ -717,12 +732,20 @@ html {
         align-items: center;
     }
 
+    .header-left {
+        gap: 8px;
+    }
+
+    .header-logo {
+        height: 1.2rem; /* Match mobile h1 font-size */
+    }
+
     .header h1 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .contact-link {
-        font-size: 0.8rem;
+        font-size: 0.79rem;
     }
 
     .hero {
@@ -788,10 +811,11 @@ html {
     .machinery-carousel {
         touch-action: manipulation;
         margin-bottom: 30px;
-        max-width: 80%;
+        max-width: 280px;
         margin-left: auto;
         margin-right: auto;
         position: relative;
+        padding: 0;
     }
 
     .carousel-container {
@@ -802,8 +826,12 @@ html {
         flex-direction: column;
         min-height: auto;
         touch-action: manipulation;
-        height: 400px;
+        height: 420px;
         overflow: hidden;
+        border-radius: 20px;
+        padding: 10px;
+        width: 280px;
+        margin: 0 auto;
     }
 
     .machine-image, .machine-info {
@@ -812,7 +840,7 @@ html {
     }
 
     .machine-image {
-        height: 120px;
+        height: 220px;
         font-size: 2.5rem;
         touch-action: manipulation;
         flex-shrink: 0;
@@ -829,52 +857,53 @@ html {
     }
 
     .machine-info {
-        padding: 15px 12px;
+        padding: 10px 15px 15px 15px;
         touch-action: manipulation;
-        height: 280px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+        height: 180px;
+        display: block;
         overflow: hidden;
     }
 
     .machine-info h3 {
-        font-size: 0.85rem;
-        margin-bottom: 8px;
-        line-height: 1.2;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+        line-height: 1.1;
+        color: #00ffff;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        display: block;
+        height: auto;
     }
 
     .specs {
+        display: grid;
         grid-template-columns: 1fr;
-        gap: 4px;
-        overflow-y: auto;
-        max-height: 240px;
+        gap: 6px;
+        overflow: visible;
+        max-height: none;
+        margin: 0;
+        padding: 0;
     }
 
     .spec-item {
-        font-size: 0.65rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        font-size: 0.7rem;
+        display: block;
         padding: 2px 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        min-height: 22px;
+        min-height: 20px;
     }
 
     .spec-label {
         margin-bottom: 0;
-        flex: 1;
-        font-size: 0.6rem;
+        font-size: 0.75rem;
+        display: inline;
     }
 
     .spec-value {
-        flex-shrink: 0;
-        text-align: right;
-        font-size: 0.6rem;
+        font-size: 0.75rem;
+        display: inline;
+        margin-left: 0;
     }
 
     .machinery-carousel .carousel-controls {
@@ -893,7 +922,7 @@ html {
     .carousel-btn {
         width: auto;
         height: auto;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         pointer-events: all;
         background: transparent;
         border: none;
@@ -907,7 +936,7 @@ html {
         position: relative;
         z-index: 9999;
         padding: 8px;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+        text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.8), 0 0 35px rgba(255, 255, 255, 0.6);
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -923,7 +952,7 @@ html {
         outline: none;
         background: transparent;
         color: #ffffff;
-        text-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 255, 255, 0.8);
+        text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.9), 0 0 40px rgba(255, 255, 255, 0.7);
         -webkit-tap-highlight-color: transparent;
     }
 
@@ -940,7 +969,7 @@ html {
     }
 
     .software-content .info-card p {
-        font-size: 0.85rem;
+        font-size: 1rem;
     }
 
     .section {
@@ -952,6 +981,12 @@ html {
         margin-bottom: 30px;
     }
 
+    /* APPLY 280PX WIDTH ONLY TO SOFTWARE CARDS */
+    .software-content {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
     .product-heading {
         font-size: 0.95rem !important;
     }
@@ -959,6 +994,9 @@ html {
     /* MOBILE PRODUCTS SECTION */
     .product-item {
         margin-bottom: 40px;
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .product-image-carousel {
@@ -1000,14 +1038,45 @@ html {
     .product-btn {
         width: 35px;
         height: 35px;
-        font-size: 1rem;
+        font-size: 1.2rem;
+        pointer-events: all;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 0, 0.3);
+        color: #ffff00;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        text-shadow: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .product-btn:hover {
+        background: rgba(255, 255, 0, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transform: scale(1.05);
+        text-shadow: none;
     }
 
     .product-btn:focus,
     .product-btn:active,
     .product-btn:visited {
         outline: none;
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(255, 255, 0, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         color: #ffff00;
         border: 1px solid rgba(255, 255, 0, 0.3);
         -webkit-tap-highlight-color: transparent;
@@ -1148,7 +1217,7 @@ html {
     }
 
     .product-heading {
-        font-size: 0.9rem !important;
+        font-size: 1.1rem !important;
     }
 
     /* EXTRA SMALL MOBILE PRODUCTS SECTION */
