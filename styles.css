@@ -44,9 +44,9 @@ html {
 }
 
 .header-logo {
-    height: 1.4rem !important;
+    height: 3vh !important;
     width: auto !important;
-    max-height: 1.4rem !important;
+    max-height: 3vh !important;
     object-fit: contain;
     display: block;
     flex-shrink: 0;
