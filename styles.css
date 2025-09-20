@@ -44,12 +44,15 @@ html {
 }
 
 .header-logo {
-    height: 1.4rem; /* Same as h1 font-size */
-    width: auto;
-    max-width: 1.4rem; /* Add max-width constraint for desktop */
-    max-height: 1.4rem; /* Add max-height constraint for desktop */
+    height: 1.4rem !important;
+    width: 1.4rem !important;
+    max-width: 1.4rem !important;
+    max-height: 1.4rem !important;
+    min-width: 1.4rem !important;
+    min-height: 1.4rem !important;
     object-fit: contain;
     display: block;
+    flex-shrink: 0;
 }
 .header h1 {
     font-size: 1.4rem;
