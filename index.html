@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARNAV ENTERPRISES</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>ARNAV ENTERPRISES</h1>
+        <span class="contact-link" onclick="scrollToSection('contact')">Contact Us</span>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h2>
+                <span style='font-style:italic; color:#58ffff;'>Precision</span>
+                <span style="color:#fff;"> in Every Cut, </span>
+                <span style='font-style:italic; color:#ffe24c;'>Innovation</span>
+                <span style="color:#fff;"> in Every Design.</span>
+            </h2>
+            <p>
+                Delivering Quality, Reliability, And Expertise In Every Project
+            </p>
+        </div>
+        
+        <div class="nav-cards">
+            <div class="nav-card" onclick="scrollToSection('machinery')">
+                <h3>Machinery & Software</h3>
+                <p>Our advanced tool room machinery ensures precision and efficiency.</p>
+            </div>
+            <div class="nav-card" onclick="scrollToSection('products')">
+                <h3>Products</h3>
+                <p>We offer a wide range of high-quality engineered parts.</p>
+            </div>
+            <div class="nav-card" onclick="scrollToSection('about')">
+                <h3>About Us</h3>
+                <p>Know more about Arnav Enterprises and our expert team.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="machinery" class="section">
+        <h2>MACHINERY AND SOFTWARE</h2>
+        
+        <h3 class="product-heading">MACHINES <span style="color: #fff;">WE HAVE</span></h3>
+        <div class="machinery-carousel">
+            <div class="carousel-container" id="machineryCarouselContainer">
+                <!-- Machinery slides will be loaded from machinery.js -->
+            </div>
+
+            <div class="carousel-controls">
+                <button class="carousel-btn" onclick="prevMachinerySlide()"><</button>
+                <button class="carousel-btn" onclick="nextMachinerySlide()">></button>
+            </div>
+
+            <div class="carousel-dots" id="machineryCarouselDots">
+                <!-- Dots will be generated dynamically -->
+            </div>
+        </div>
+
+        <h3 class="product-heading">SOFTWARES WE USE</h3>
+        <div class="software-content">
+            <div class="info-card">
+                <p><strong>WORK NC</strong></p>
+                <p><strong>SOLID CAM</strong></p>
+                <p><strong>AUTOCAD</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="section">
+        <h2>OUR PRODUCTS</h2>
+        <div id="products-container">
+            <!-- Products will be loaded from products.js -->
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>About Us "Arnav Enterprises"</h2>
+        <div class="about-content">
+            <div class="info-card">
+                <p>At Arnav Enterprises, we take pride in being a trusted partner for precision tool room solutions. Located at Plot No. E-70/27, MIDC Waluj, Aurangabad, our facility is equipped with advanced technology and supported by a highly skilled and experienced team.</p>
+                <p>We specialize in:</p>
+                <ul>
+                    <li>Design and manufacturing of Fixtures and Relation Gauges</li>
+                    <li>Core-Cavity, Side Core, Riser, Housing, Guide Pillar, Bush, and other critical parts</li>
+                    <li>PDC Die components such as Sliders, Holders, Chilvents, Screw Bushes, and all other PDC Die parts</li>
+                    <li>Precision machining of complex and critical components</li>
+                    <li>Wire cut job work</li>
+                    <li>Comprehensive Tool Room services tailored to your requirements</li>
+                </ul>
+                <p>With our commitment to quality, precision, and innovation, we ensure reliable solutions for all kinds of tool room needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="clients" class="clients-section">
+        <h2>Our Valued Clients</h2>
+        <div class="clients-slider" id="clients-slider">
+            <!-- Clients will be loaded from clients.js -->
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contact Us</h2>
+        <div class="about-content">
+            <div class="info-card">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <h4>Phone & Mobile</h4>
+                        <p>+91 9823119818</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Email</h4>
+                        <p>info@arnaventerprises.org<br>arnaventerprises742@gmail.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Address</h4>
+                        <p>PLOT NO-E-70/27,WALUJ MIDC INDUSTRIAL AREA<br>AURANGABAD-431136</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript Files -->
+    <script src="machinery-data.js"></script>
+    <script src="products-data.js"></script>
+    <script src="clients-data.js"></script>
+    <script src="main-script.js"></script>
+</body>
+</html>

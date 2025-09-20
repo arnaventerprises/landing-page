@@ -1,0 +1,463 @@
+// ARNAV ENTERPRISES - Main JavaScript Functionality with Product Auto-Slide
+
+// Global variables
+let currentMachinerySlideIndex = 0;
+let totalMachinerySlides = 0;
+let autoMachinerySlideInterval;
+let productAutoSlideIntervals = new Map(); // Store intervals for each product carousel
+
+// ========== INITIALIZATION ========== 
+document.addEventListener('DOMContentLoaded', function() {
+    initializeWebsite();
+    setupEventListeners();
+    startAutoSlide();
+    startProductAutoSlides();
+    setupImageModal();
+});
+
+function initializeWebsite() {
+    // Generate all dynamic content
+    generateMachinerySlides();
+    generateMachineryDots();
+    generateProducts();
+    generateClients();
+    
+    // Set total slides count
+    totalMachinerySlides = machineryData.length;
+    
+    // Initialize intersection observer for animations
+    setupScrollAnimations();
+    
+    // Create image modal
+    createImageModal();
+}
+
+// ========== NAVIGATION FUNCTIONS ==========
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        const headerHeight = document.querySelector('.header').offsetHeight;
+        const offset = headerHeight + 20;
+        
+        setTimeout(() => {
+            const elementPosition = section.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }, 10);
+    }
+}
+
+// ========== MACHINERY CAROUSEL FUNCTIONS ==========
+function showMachinerySlide(index) {
+    const container = document.getElementById('machineryCarouselContainer');
+    if (!container) return;
+    
+    const translateX = -index * 100;
+    container.style.transform = `translateX(${translateX}%)`;
+    
+    // Update dots
+    const dots = document.querySelectorAll('#machineryCarouselDots .dot');
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+}
+
+function nextMachinerySlide() {
+    currentMachinerySlideIndex = (currentMachinerySlideIndex + 1) % totalMachinerySlides;
+    showMachinerySlide(currentMachinerySlideIndex);
+}
+
+function prevMachinerySlide() {
+    currentMachinerySlideIndex = (currentMachinerySlideIndex - 1 + totalMachinerySlides) % totalMachinerySlides;
+    showMachinerySlide(currentMachinerySlideIndex);
+}
+
+function currentMachinerySlide(index) {
+    currentMachinerySlideIndex = index - 1;
+    showMachinerySlide(currentMachinerySlideIndex);
+}
+
+// ========== IMAGE MODAL FUNCTIONALITY ==========
+function createImageModal() {
+    // Create modal HTML structure
+    const modalHTML = `
+        <div id="imageModal" class="image-modal">
+            <div class="modal-content">
+                <img id="modalImage" class="modal-image" src="" alt="Product Image">
+                <button id="modalClose" class="modal-close">&times;</button>
+            </div>
+        </div>
+    `;
+    
+    // Add modal to body
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+function setupImageModal() {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalClose = document.getElementById('modalClose');
+    
+    if (!modal || !modalImage || !modalClose) return;
+    
+    // Close modal when clicking X button
+    modalClose.addEventListener('click', closeImageModal);
+    
+    // Close modal when clicking outside the image
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeImageModal();
+        }
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeImageModal();
+        }
+    });
+    
+    // Add click listeners to all product images
+    setupImageClickListeners();
+}
+
+function setupImageClickListeners() {
+    // Wait a bit for products to be generated
+    setTimeout(() => {
+        const productImages = document.querySelectorAll('.product-image-carousel .image-container img');
+        const machineryImages = document.querySelectorAll('.machine-image img');
+        
+        // Product images click listeners
+        productImages.forEach(img => {
+            img.addEventListener('click', function(e) {
+                // Prevent triggering carousel navigation
+                e.stopPropagation();
+                openImageModal(this.src, this.alt);
+            });
+        });
+        
+        // Machinery images click listeners
+        machineryImages.forEach(img => {
+            img.addEventListener('click', function(e) {
+                // Prevent triggering carousel navigation
+                e.stopPropagation();
+                openImageModal(this.src, this.alt);
+            });
+        });
+    }, 100);
+}
+
+function openImageModal(imageSrc, imageAlt) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    
+    if (!modal || !modalImage) return;
+    
+    modalImage.src = imageSrc;
+    modalImage.alt = imageAlt;
+    modal.classList.add('active');
+    
+    // Prevent body scrolling when modal is open
+    document.body.style.overflow = 'hidden';
+    
+    // Stop all auto-sliding when modal is open
+    stopAutoSlide();
+    stopProductAutoSlides();
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    
+    if (!modal) return;
+    
+    modal.classList.remove('active');
+    
+    // Restore body scrolling
+    document.body.style.overflow = '';
+    
+    // Restart auto-sliding when modal is closed
+    restartAutoSlide();
+    startProductAutoSlides();
+}
+
+// ========== PRODUCT CAROUSEL FUNCTIONS ==========
+function nextProductImage(button) {
+    const imageContainer = button.closest('.product-image-carousel').querySelector('.image-container');
+    const scrollAmount = imageContainer.clientWidth;
+    imageContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    
+    // Reset auto-slide timer for this specific carousel
+    resetProductAutoSlide(button.closest('.product-item'));
+}
+
+function prevProductImage(button) {
+    const imageContainer = button.closest('.product-image-carousel').querySelector('.image-container');
+    const scrollAmount = imageContainer.clientWidth;
+    imageContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    
+    // Reset auto-slide timer for this specific carousel
+    resetProductAutoSlide(button.closest('.product-item'));
+}
+
+// ========== PRODUCT AUTO-SLIDE FUNCTIONALITY ==========
+function startProductAutoSlides() {
+    const productCarousels = document.querySelectorAll('.product-item');
+    
+    productCarousels.forEach((productItem, index) => {
+        const imageContainer = productItem.querySelector('.image-container');
+        if (!imageContainer) return;
+        
+        const images = imageContainer.querySelectorAll('img');
+        if (images.length <= 1) return; // Skip if only one image
+        
+        let currentImageIndex = 0;
+        
+        const interval = setInterval(() => {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            const scrollAmount = imageContainer.clientWidth * currentImageIndex;
+            imageContainer.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        }, 5000); // 5 seconds
+        
+        productAutoSlideIntervals.set(productItem, interval);
+    });
+}
+
+function stopProductAutoSlides() {
+    productAutoSlideIntervals.forEach((interval) => {
+        clearInterval(interval);
+    });
+    productAutoSlideIntervals.clear();
+}
+
+function resetProductAutoSlide(productItem) {
+    if (productAutoSlideIntervals.has(productItem)) {
+        clearInterval(productAutoSlideIntervals.get(productItem));
+        
+        const imageContainer = productItem.querySelector('.image-container');
+        const images = imageContainer.querySelectorAll('img');
+        if (images.length <= 1) return;
+        
+        // Get current scroll position to determine current image
+        const scrollLeft = imageContainer.scrollLeft;
+        const imageWidth = imageContainer.clientWidth;
+        let currentImageIndex = Math.round(scrollLeft / imageWidth);
+        
+        const interval = setInterval(() => {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            const scrollAmount = imageContainer.clientWidth * currentImageIndex;
+            imageContainer.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        }, 5000);
+        
+        productAutoSlideIntervals.set(productItem, interval);
+    }
+}
+
+// ========== MACHINERY AUTO-SLIDE FUNCTIONALITY ==========
+function startAutoSlide() {
+    autoMachinerySlideInterval = setInterval(nextMachinerySlide, 5000); // 5 seconds
+}
+
+function stopAutoSlide() {
+    clearInterval(autoMachinerySlideInterval);
+}
+
+function restartAutoSlide() {
+    stopAutoSlide();
+    startAutoSlide();
+}
+
+// ========== EVENT LISTENERS SETUP ==========
+function setupEventListeners() {
+    // Header scroll effect
+    window.addEventListener('scroll', handleHeaderScroll);
+    
+    // Machinery carousel hover effects
+    const machineryCarousel = document.querySelector('.machinery-carousel');
+    if (machineryCarousel) {
+        machineryCarousel.addEventListener('mouseenter', stopAutoSlide);
+        machineryCarousel.addEventListener('mouseleave', restartAutoSlide);
+        
+        // Touch events for machinery carousel
+        setupMachineryTouchEvents(machineryCarousel);
+    }
+    
+    // Product carousels hover and touch events
+    setupProductInteractionEvents();
+    
+    // Visibility change handling
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+}
+
+// ========== HEADER SCROLL EFFECT ==========
+function handleHeaderScroll() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    
+    if (window.scrollY > 50) {
+        header.style.background = 'rgba(0, 0, 0, 0.95)';
+        header.style.borderBottom = '1px solid rgba(0, 255, 255, 0.3)';
+    } else {
+        header.style.background = 'rgba(0, 0, 0, 0.9)';
+        header.style.borderBottom = '1px solid rgba(0, 255, 255, 0.2)';
+    }
+}
+
+// ========== TOUCH EVENTS SETUP ==========
+function setupMachineryTouchEvents(carousel) {
+    let startX = 0;
+    let isDragging = false;
+
+    carousel.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+        stopAutoSlide();
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        // Allow vertical scrolling by not preventing default
+    });
+
+    carousel.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        const endX = e.changedTouches[0].clientX;
+        const deltaX = startX - endX;
+        
+        if (Math.abs(deltaX) > 50) {
+            if (deltaX > 0) {
+                nextMachinerySlide();
+            } else {
+                prevMachinerySlide();
+            }
+        }
+        
+        restartAutoSlide();
+    });
+}
+
+function setupProductInteractionEvents() {
+    const productCarousels = document.querySelectorAll('.product-image-carousel');
+    
+    productCarousels.forEach(carousel => {
+        const productItem = carousel.closest('.product-item');
+        
+        // Hover events for desktop
+        carousel.addEventListener('mouseenter', () => {
+            if (productAutoSlideIntervals.has(productItem)) {
+                clearInterval(productAutoSlideIntervals.get(productItem));
+            }
+        });
+        
+        carousel.addEventListener('mouseleave', () => {
+            resetProductAutoSlide(productItem);
+        });
+        
+        // Touch events
+        let startX = 0;
+        let isDragging = false;
+
+        carousel.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            // Stop auto-slide on touch
+            if (productAutoSlideIntervals.has(productItem)) {
+                clearInterval(productAutoSlideIntervals.get(productItem));
+            }
+        });
+
+        carousel.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            // Allow vertical scrolling by not preventing default
+        });
+
+        carousel.addEventListener('touchend', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const endX = e.changedTouches[0].clientX;
+            const deltaX = startX - endX;
+            
+            if (Math.abs(deltaX) > 50) {
+                const imageContainer = carousel.querySelector('.image-container');
+                const scrollAmount = imageContainer.clientWidth;
+                
+                if (deltaX > 0) {
+                    imageContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                } else {
+                    imageContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                }
+            }
+            
+            // Restart auto-slide after touch interaction
+            resetProductAutoSlide(productItem);
+        });
+    });
+}
+
+// ========== SCROLL ANIMATIONS ==========
+function setupScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Apply animation setup and observe elements
+    const animatedElements = document.querySelectorAll('.section, .nav-card, .product-item, .info-card, .clients-section');
+    animatedElements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        observer.observe(element);
+    });
+}
+
+// ========== VISIBILITY CHANGE HANDLING ==========
+function handleVisibilityChange() {
+    if (document.hidden) {
+        stopAutoSlide();
+        stopProductAutoSlides();
+    } else {
+        restartAutoSlide();
+        startProductAutoSlides();
+    }
+}
+
+// ========== UTILITY FUNCTIONS ==========
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// ========== ERROR HANDLING ==========
+window.addEventListener('error', function(e) {
+    console.error('JavaScript Error:', e.error);
+    // Continue functioning even if there are errors
+});
+
+// ========== PERFORMANCE OPTIMIZATION ==========
+// Debounced scroll handler for better performance
+const debouncedScrollHandler = debounce(handleHeaderScroll, 10);
+window.removeEventListener('scroll', handleHeaderScroll);
+window.addEventListener('scroll', debouncedScrollHandler);
