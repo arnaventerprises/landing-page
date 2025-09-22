@@ -82,7 +82,6 @@ function generateProducts() {
 
     container.innerHTML = productsData.map(product => `
         <div class="product-item">
-            <h3 class="product-heading">${product.name}</h3>
             <div class="product-image-carousel">
                 <div class="image-container">
                     ${product.images.map((image, index) => 
@@ -90,6 +89,7 @@ function generateProducts() {
                               onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDYwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iNDAwIiBmaWxsPSIjMmEyYTJhIi8+CjxwYXRoIGQ9Ik0yNTAgMTUwSDM1MFYyNTBIMjUwVjE1MFoiIGZpbGw9IiM0YTRhNGEiLz4KPHRleHQgeD0iMzAwIiB5PSIzMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2NjY2NjYyIgdGV4dC1hbmNob3I9Im1pZGRsZSI+JHtwcm9kdWN0Lm5hbWV9PC90ZXh0Pgo8L3N2Zz4K'; this.alt='${product.name} - Image not available';" />`
                     ).join('')}
                 </div>
+                <h3 class="product-heading">${product.name}</h3>
                 <div class="product-controls">
                     <button class="product-btn" onclick="prevProductImage(this)">‹</button>
                     <button class="product-btn" onclick="nextProductImage(this)">›</button>

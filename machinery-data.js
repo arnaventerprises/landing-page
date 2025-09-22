@@ -1,4 +1,4 @@
-// ARNAV ENTERPRISES - Updated Machinery Data with Compact Specs
+// ARNAV ENTERPRISES - Updated Machinery Data with Mobile View Details Functionality
 const machineryData = [
     {
         icon: "🏭",
@@ -59,7 +59,7 @@ const machineryData = [
         }
     },
     {
-        icon: "🔍",
+        icon: "📏",
         image: "assets/machinery7.png",
         name: "DRO MACHINE",
         specs: {}
@@ -104,12 +104,12 @@ const machineryData = [
     }
 ];
 
-// Function to generate machinery slides HTML
+// Function to generate machinery slides HTML with mobile-specific structure
 function generateMachinerySlides() {
     const container = document.getElementById('machineryCarouselContainer');
     if (!container) return;
 
-    container.innerHTML = machineryData.map(machine => `
+    container.innerHTML = machineryData.map((machine, index) => `
         <div class="machine-slide">
             <div class="machine-image">
                 ${machine.image ? 
@@ -119,13 +119,42 @@ function generateMachinerySlides() {
             </div>
             <div class="machine-info">
                 <h3>${machine.name}</h3>
-                <div class="specs">
-                    ${Object.entries(machine.specs).map(([label, value]) => `
-                        <div class="spec-item">
-                            <span class="spec-label">${label}</span>
-                            <span class="spec-value">${value}</span>
+                
+                <!-- Desktop specs (hidden on mobile) -->
+                <div class="desktop-specs">
+                    <div class="specs">
+                        ${Object.entries(machine.specs).map(([label, value]) => `
+                            <div class="spec-item">
+                                <span class="spec-label">${label}</span>
+                                <span class="spec-value">${value}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <!-- Mobile details section (hidden by default) -->
+                <div class="machine-details" id="machine-details-${index}">
+                    ${Object.entries(machine.specs).length > 0 ? `
+                        <div class="specs">
+                            ${Object.entries(machine.specs).map(([label, value]) => `
+                                <div class="spec-item">
+                                    <span class="spec-label">${label}:</span>
+                                    <span class="spec-value">${value}</span>
+                                </div>
+                            `).join('')}
                         </div>
-                    `).join('')}
+                    ` : '<p style="color: #cccccc; font-size: 0.9rem; text-align: center;">No detailed specifications available</p>'}
+                </div>
+                
+                <!-- Mobile controls -->
+                <div class="machine-controls">
+                    <button class="view-details-btn" onclick="toggleMachineDetails(${index})" id="view-btn-${index}">
+                        View Details
+                    </button>
+                    <div class="machine-nav-buttons">
+                        <button class="machine-nav-btn" onclick="prevMachinerySlide()">‹</button>
+                        <button class="machine-nav-btn" onclick="nextMachinerySlide()">›</button>
+                    </div>
                 </div>
             </div>
         </div>

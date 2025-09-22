@@ -1,0 +1,731 @@
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+    .header {
+        padding: 15px 20px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header-left {
+        gap: 8px;
+    }
+
+    .header-logo {
+        height: 1.2rem; /* Match mobile h1 font-size */
+    }
+
+    .header h1 {
+        font-size: 1.1rem;
+    }
+
+    .contact-link {
+        font-size: 0.79rem;
+    }
+
+    .hero {
+        min-height: 100vh;
+        padding: 80px 15px 40px;
+        justify-content: flex-start;
+        padding-top: 70px;
+    }
+
+    .gear-container {
+        top: 18%;
+    }
+
+    .gear {
+        width: 60px;
+        height: 60px;
+        font-size: 60px;
+    }
+
+    .hero-text {
+        margin-top: 40px;
+        margin-bottom: 30px;
+        padding: 0 10px;
+    }
+
+    .hero-text h2 {
+        font-size: 1.4rem;
+        line-height: 1.3;
+        margin-bottom: 15px;
+        word-wrap: break-word;
+        hyphens: auto;
+    }
+
+    .hero-text p {
+        font-size: 1rem;
+        font-weight: 300;
+        line-height: 1.4;
+        max-width: 100%;
+        padding: 0 10px;
+    }
+
+    .nav-cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        padding: 0 15px 40px;
+    }
+
+    .nav-card {
+        width: 100%;
+        max-width: calc(100vw - 40px);
+        padding: 20px 18px;
+    }
+
+    .nav-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .nav-card p {
+        font-size: 0.85rem;
+    }
+
+    /* ========== MOBILE MACHINERY CAROUSEL ========== */
+    .machinery-carousel {
+        touch-action: manipulation;
+        margin-bottom: 30px;
+        max-width: calc(100vw - 40px);
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        padding: 0;
+    }
+
+    .carousel-container {
+        touch-action: manipulation;
+    }
+
+    .machine-slide {
+        flex-direction: column;
+        height: auto;
+        min-height: 300px;
+        touch-action: manipulation;
+        border-radius: 20px;
+        padding: 20px;
+        width: calc(100vw - 40px);
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .machine-image {
+        width: 100%;
+        height: 200px;
+        font-size: 2.5rem;
+        touch-action: manipulation;
+        flex-shrink: 0;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #1a1a1a, #333333);
+    }
+
+    .machine-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 12px;
+    }
+
+    .machine-info {
+        width: 100%;
+        padding: 0;
+        touch-action: manipulation;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        overflow: visible;
+    }
+
+    .machine-info h3 {
+        font-size: 1rem !important;
+        margin-bottom: 15px;
+        line-height: 1.3;
+        color: #ffffff;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        display: block;
+        height: auto;
+        text-align: center !important;
+        width: 100% !important;
+    }
+
+    /* Hide desktop specs on mobile */
+    .desktop-specs {
+        display: none;
+    }
+
+    /* Mobile details are controlled by JavaScript */
+    .machine-details {
+        display: block;
+        width: 100% !important;
+        text-align: left !important; /* Keep specs left-aligned for readability */
+    }
+
+    .machine-details .specs {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 15px;
+        overflow: visible;
+        max-height: none;
+        margin: 15px 0;
+        padding: 0;
+    }
+
+    .machine-details .spec-item {
+        font-size: 0.75rem;
+        display: block;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 5px;
+    }
+
+    .machine-details .spec-label {
+        margin-bottom: 0;
+        font-size: 0.79rem !important;
+        display: inline;
+        color: #ffffff;
+        font-weight: 600;
+    }
+
+    .machine-details .spec-value {
+        font-size: 0.79rem !important;
+        display: inline;
+        margin-left: 8px;
+        color: #ffffff;
+        font-weight: 300;
+    }
+
+    .machine-controls {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 15px !important;
+        padding: 20px 0 0 !important;
+        width: 100% !important;
+        margin-top: 15px !important;
+    }
+
+    .view-details-btn {
+        order: 1 !important; /* Place button first (above nav buttons) */
+        background: rgba(128, 128, 128, 0.2);
+        border: 1px solid rgba(128, 128, 128, 0.4);
+        color: #cccccc;background: rgba(128, 128, 128, 0.2) !important;
+        border: 1px solid rgba(128, 128, 128, 0.4) !important;
+        color: #cccccc !important;
+        padding: 7px 14px !important;
+        border-radius: 8px !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        font-size: 0.8rem !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+        margin-bottom: 10px !important;
+    }
+
+    .view-details-btn:hover,
+    .view-details-btn:focus,
+    .view-details-btn:active {
+        background: rgba(128, 128, 128, 0.3) !important;
+        transform: scale(1.05) !important;
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+
+    .view-details-btn.expanded {
+        background: rgba(255, 100, 100, 0.2) !important;
+        border: 1px solid rgba(255, 100, 100, 0.4) !important;
+        color: #ffaaaa !important;
+    }
+
+    /* Center the navigation buttons container */
+    .machine-nav-buttons {
+        order: 2 !important; /* Place nav buttons after view details button */
+        display: flex !important;
+        gap: 15px !important;
+        justify-content: center !important;
+    }
+
+    .machine-nav-btn {
+        background: rgba(33, 138, 164, 0.093) !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        color: #e5e5e5 !important;
+        padding: 10px 15px !important;
+        border-radius: 50% !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        cursor: pointer !important;
+        transition: all 0.3s ease !important;
+        font-size: 1.1rem !important;
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-touch-callout: none !important;
+        -webkit-user-select: none !important;
+        user-select: none !important;
+    }
+
+    .machine-nav-btn:hover,
+    .machine-nav-btn:focus,
+    .machine-nav-btn:active {
+        background: rgba(0, 255, 255, 0.1) !important;
+        transform: scale(1.1) !important;
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+    }
+
+    /* Hide desktop carousel controls on mobile */
+    .carousel-controls {
+        display: none;
+    }
+
+    .carousel-dots {
+        gap: 8px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    /* ========== MOBILE SOFTWARE SECTION ========== */
+    .software-content {
+        max-width: calc(100vw - 40px);
+        margin: 0 auto;
+    }
+
+    .software-content .info-card {
+        padding: 30px 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .software-content .info-card p {
+        font-size: 1rem !important;
+    }
+
+    /* Make software names white instead of blue on mobile */
+    .software-content .info-card strong {
+        color: #ffffff !important; /* Changed from #00ffff to white */
+        font-weight: 600 !important;
+        text-decoration: none !important; /* Remove underline */
+    }
+
+    .software-item {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
+    }
+
+    .software-logo-small {
+        height: 40px !important;
+        width: auto !important;
+        object-fit: contain !important;
+        filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.3)) !important;
+    }
+
+    .software-item span {
+        font-size: 1rem !important;
+        color: #ffffff !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
+    }
+
+
+    .section {
+        padding: 30px 15px;
+    }
+
+    .section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 30px;
+    }
+
+    /* Make machinery headings light grey on mobile only */
+    .product-heading {
+        font-size: 0.95rem !important;
+        color: #aaaaaa !important; /* Changed to more grey */
+        font-weight: 500 !important;
+        margin-bottom: 20px !important;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+        background-clip: unset !important;
+        text-align: center !important;
+    }
+
+    /* Override inline styles for spans inside product headings on mobile */
+    .product-heading span {
+        color: #aaaaaa !important;
+    }
+
+    /* ========== MOBILE PRODUCTS SECTION ========== */
+    .product-item {
+        margin-bottom: 40px;
+        max-width: calc(100vw - 40px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .product-image-carousel {
+        touch-action: manipulation;
+        max-height: 340px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+    }
+
+    .image-container {
+        touch-action: manipulation;
+        height: 250px;
+        scroll-snap-type: x mandatory;
+    }
+
+    .image-container img {
+        touch-action: manipulation;
+        object-fit: contain;
+        scroll-snap-align: start;
+        cursor: pointer;
+    }
+
+    .modal-content {
+        max-width: 95vw;
+        max-height: 95vh;
+        padding: 20px;
+    }
+
+    .modal-close {
+        top: -40px;
+        right: 10px;
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+
+    .product-controls {
+        padding: 15px 0;
+        background: rgba(255, 255, 255, 0.02);
+        width: 100%;
+    }
+
+    .product-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        pointer-events: all;
+        background: rgba(33, 138, 164, 0.093);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: #e5e5e5;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        text-shadow: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .product-btn:hover {
+        background: rgba(0, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transform: scale(1.05);
+        text-shadow: none;
+    }
+
+    .product-btn:focus,
+    .product-btn:active,
+    .product-btn:visited {
+        outline: none;
+        background: rgba(0, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: #00ffff;
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ========== MOBILE CLIENTS SECTION ========== */
+    .clients-section {
+        padding: 60px 0;
+    }
+
+    .clients-section h2 {
+        font-size: 1.6rem;
+        margin-bottom: 40px;
+    }
+
+    .clients-slider {
+        gap: 30px;
+    }
+
+    .client-logo {
+        min-width: 180px;
+        padding: 0;
+        height: 160px;
+        overflow: hidden;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+    }
+
+    .client-logo-container {
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        background: none;
+        border-radius: 0;
+    }
+
+    .client-logo-icon {
+        font-size: 3rem;
+    }
+
+    .client-name {
+        display: none;
+    }
+
+    #about .info-card ul {
+        padding-left: 25px; /* Adds space to the left of the bullet points */
+    }
+
+    /* ========== MOBILE ABOUT & CONTACT SECTIONS ========== */
+    .info-card {
+        padding: 30px 20px;
+        max-width: calc(100vw - 40px);
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .info-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .info-card p, .info-card li {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .contact-item {
+        padding: 15px;
+        background: rgba(0, 255, 255, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(0, 255, 255, 0.2);
+    }
+
+    .contact-item h4 {
+        font-size: 1rem;
+        color: #00ffff;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .contact-item p {
+        font-size: 0.9rem;
+        color: #ffffff;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text h2 {
+        font-size: 1.2rem;
+        line-height: 1.2;
+    }
+
+    .hero-text p {
+        font-size: 0.9rem;
+        font-weight: 300;
+    }
+
+    .nav-card {
+        max-width: calc(100vw - 30px);
+        padding: 20px 15px;
+    }
+
+    .section h2 {
+        font-size: 1.4rem;
+    }
+
+    .software-content {
+        max-width: calc(100vw - 30px);
+    }
+
+    .software-content .info-card p {
+        font-size: 1rem;
+    }
+
+    .clients-section h2 {
+        font-size: 1.4rem;
+    }
+
+    .client-logo {
+        min-width: 150px;
+        padding: 0;
+        height: 140px;
+        overflow: hidden;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+    }
+
+    .client-logo-container {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        background: none;
+        border-radius: 0;
+    }
+
+    .client-logo-icon {
+        font-size: 2.5rem;
+    }
+
+    .client-name {
+        display: none;
+    }
+
+    .machine-slide {
+        width: calc(100vw - 30px);
+        padding: 15px;
+    }
+
+    .machine-info h3 {
+        font-size: 0.9rem;
+    }
+
+    .machine-details .spec-item {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+    }
+
+    .machine-details .spec-label {
+        font-size: 0.7rem;
+    }
+
+    .machine-details .spec-value {
+        font-size: 0.7rem;
+    }
+
+    .product-heading {
+        font-size: 1.1rem !important;
+    }
+
+    .product-item {
+        max-width: calc(100vw - 30px);
+    }
+
+    .product-image-carousel {
+        max-height: 320px;
+    }
+    
+    .image-container {
+        height: 230px;
+    }
+
+    .info-card {
+        max-width: calc(100vw - 30px);
+        padding: 25px 15px;
+    }
+}
+
+/* Ensure desktop styles remain unchanged */
+@media (min-width: 769px) {
+    /* Keep desktop styles unchanged */
+    .product-heading {
+        background: #aaaaaa !important;
+        -webkit-background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+    }
+
+
+
+    
+     .machine-controls {
+        display: none !important;
+    }
+
+
+    .software-content .info-card strong {
+        color: #ffffff !important;
+        text-decoration: underline !important;
+    }
+
+    #products .product-heading {
+        color: #ffffff !important;
+        background: none !important;
+        -webkit-background-clip: unset !important;
+        -webkit-text-fill-color: unset !important;
+        background-clip: unset !important;
+        text-align: center;
+        font-weight: 600; /* Optional: Adjust font weight as needed */
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    #products-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    .product-item {
+        width: calc(50% - 15px); /* Creates two columns with a gap */
+        max-width: unset; /* Override previous max-width */
+        margin: 0; /* Override previous margin to use gap */
+    }
+}
+
+
+#products .product-heading {
+    color: #ffffff !important; /* Sets the text color to white */
+    margin-top: 10px !important; /* Adds space above the heading */
+    margin-bottom: 10px !important; /* Adds space below the heading */
+}

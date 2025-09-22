@@ -1,0 +1,89 @@
+/* ========== PRODUCTS SECTION - FIXED IMAGE STYLES ========== */
+.product-item {
+    margin-bottom: 60px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 60px;
+}
+
+.product-image-carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 400px; /* Further reduced from 400px */
+}
+
+.image-container {
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+    height: 270px; /* Further reduced from 320px */
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+}
+
+.image-container img {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Changed from 'cover' to 'contain' */
+    object-position: center;
+    background: rgba(0, 0, 0, 0.1);
+    transition: none; /* Remove any transform transitions */
+    scroll-snap-align: start;
+    cursor: pointer;
+}
+
+/* Prevent unnecessary zoom on hover in desktop */
+.image-container img:hover {
+    transform: none;
+}
+
+.product-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px 0;
+    background: rgba(255, 255, 255, 0.02);
+    width: 100%;
+}
+
+.product-btn {
+    background: rgba(33, 138, 164, 0.093);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #e5e5e5;
+    padding: 10px 15px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    backdrop-filter: blur(10px);
+    
+}
+
+.product-btn:hover {
+    background: rgba(0, 255, 255, 0.1);
+    transform: scale(1.05);
+}
+
+.product-btn:focus,
+.product-btn:active {
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    background: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+

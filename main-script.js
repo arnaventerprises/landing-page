@@ -1,10 +1,12 @@
-// ARNAV ENTERPRISES - Main JavaScript Functionality with Product Auto-Slide
+// ARNAV ENTERPRISES - Main JavaScript with Enhanced Mobile Machine Details Functionality
 
 // Global variables
 let currentMachinerySlideIndex = 0;
 let totalMachinerySlides = 0;
 let autoMachinerySlideInterval;
 let productAutoSlideIntervals = new Map(); // Store intervals for each product carousel
+let expandedMachineIndex = -1; // Track which machine has expanded details
+let autoSlideBlocked = false; // Block auto-slide when details are expanded
 
 // ========== INITIALIZATION ========== 
 document.addEventListener('DOMContentLoaded', function() {
@@ -67,18 +69,102 @@ function showMachinerySlide(index) {
 }
 
 function nextMachinerySlide() {
+    // Collapse current expanded details before moving
+    if (expandedMachineIndex !== -1) {
+        collapseMachineDetails(expandedMachineIndex);
+    }
+    
     currentMachinerySlideIndex = (currentMachinerySlideIndex + 1) % totalMachinerySlides;
     showMachinerySlide(currentMachinerySlideIndex);
 }
 
 function prevMachinerySlide() {
+    // Collapse current expanded details before moving
+    if (expandedMachineIndex !== -1) {
+        collapseMachineDetails(expandedMachineIndex);
+    }
+    
     currentMachinerySlideIndex = (currentMachinerySlideIndex - 1 + totalMachinerySlides) % totalMachinerySlides;
     showMachinerySlide(currentMachinerySlideIndex);
 }
 
 function currentMachinerySlide(index) {
+    // Collapse current expanded details before moving
+    if (expandedMachineIndex !== -1) {
+        collapseMachineDetails(expandedMachineIndex);
+    }
+    
     currentMachinerySlideIndex = index - 1;
     showMachinerySlide(currentMachinerySlideIndex);
+}
+
+// ========== MOBILE MACHINE DETAILS FUNCTIONALITY ==========
+function toggleMachineDetails(machineIndex) {
+    const detailsElement = document.getElementById(`machine-details-${machineIndex}`);
+    const viewButton = document.getElementById(`view-btn-${machineIndex}`);
+    
+    if (!detailsElement || !viewButton) return;
+    
+    // If this machine is already expanded, collapse it
+    if (expandedMachineIndex === machineIndex) {
+        collapseMachineDetails(machineIndex);
+        return;
+    }
+    
+    // If another machine is expanded, collapse it first
+    if (expandedMachineIndex !== -1) {
+        collapseMachineDetails(expandedMachineIndex);
+    }
+    
+    // Expand current machine details
+    expandMachineDetails(machineIndex);
+}
+
+function expandMachineDetails(machineIndex) {
+    const detailsElement = document.getElementById(`machine-details-${machineIndex}`);
+    const viewButton = document.getElementById(`view-btn-${machineIndex}`);
+    
+    if (!detailsElement || !viewButton) return;
+    
+    // Update states
+    expandedMachineIndex = machineIndex;
+    autoSlideBlocked = true;
+    
+    // Stop auto-slide
+    stopAutoSlide();
+    
+    // Update UI
+    detailsElement.classList.add('expanded');
+    viewButton.textContent = 'Hide Details';
+    viewButton.classList.add('expanded');
+    
+    // Add smooth animation
+    setTimeout(() => {
+        detailsElement.style.transition = 'max-height 0.4s ease-in-out, opacity 0.4s ease-in-out';
+    }, 10);
+}
+
+function collapseMachineDetails(machineIndex) {
+    const detailsElement = document.getElementById(`machine-details-${machineIndex}`);
+    const viewButton = document.getElementById(`view-btn-${machineIndex}`);
+    
+    if (!detailsElement || !viewButton) return;
+    
+    // Update states
+    expandedMachineIndex = -1;
+    autoSlideBlocked = false;
+    
+    // Update UI
+    detailsElement.classList.remove('expanded');
+    viewButton.textContent = 'View Details';
+    viewButton.classList.remove('expanded');
+    
+    // Restart auto-slide after a short delay
+    setTimeout(() => {
+        if (!autoSlideBlocked) {
+            startAutoSlide();
+        }
+    }, 5000);
 }
 
 // ========== IMAGE MODAL FUNCTIONALITY ==========
@@ -179,8 +265,10 @@ function closeImageModal() {
     // Restore body scrolling
     document.body.style.overflow = '';
     
-    // Restart auto-sliding when modal is closed
-    restartAutoSlide();
+    // Restart auto-sliding when modal is closed (only if not blocked)
+    if (!autoSlideBlocked) {
+        restartAutoSlide();
+    }
     startProductAutoSlides();
 }
 
@@ -258,7 +346,15 @@ function resetProductAutoSlide(productItem) {
 
 // ========== MACHINERY AUTO-SLIDE FUNCTIONALITY ==========
 function startAutoSlide() {
-    autoMachinerySlideInterval = setInterval(nextMachinerySlide, 5000); // 5 seconds
+    // Don't start auto-slide if blocked by expanded details
+    if (autoSlideBlocked) return;
+    
+    autoMachinerySlideInterval = setInterval(() => {
+        // Double-check if auto-slide is still allowed
+        if (!autoSlideBlocked) {
+            nextMachinerySlide();
+        }
+    }, 5000); // 5 seconds
 }
 
 function stopAutoSlide() {
@@ -275,13 +371,19 @@ function setupEventListeners() {
     // Header scroll effect
     window.addEventListener('scroll', handleHeaderScroll);
     
-    // Machinery carousel hover effects
+    // Machinery carousel hover effects (desktop only)
     const machineryCarousel = document.querySelector('.machinery-carousel');
+    if (machineryCarousel && window.innerWidth > 768) {
+        machineryCarousel.addEventListener('mouseenter', () => {
+            if (!autoSlideBlocked) stopAutoSlide();
+        });
+        machineryCarousel.addEventListener('mouseleave', () => {
+            if (!autoSlideBlocked) restartAutoSlide();
+        });
+    }
+    
+    // Call touch events for machinery carousel (for all devices)
     if (machineryCarousel) {
-        machineryCarousel.addEventListener('mouseenter', stopAutoSlide);
-        machineryCarousel.addEventListener('mouseleave', restartAutoSlide);
-        
-        // Touch events for machinery carousel
         setupMachineryTouchEvents(machineryCarousel);
     }
     
@@ -290,6 +392,34 @@ function setupEventListeners() {
     
     // Visibility change handling
     document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    // Window resize handler
+    window.addEventListener('resize', debounce(handleWindowResize, 250));
+}
+
+// ========== WINDOW RESIZE HANDLER ==========
+function handleWindowResize() {
+    // Reset expanded state on resize to prevent UI issues
+    if (expandedMachineIndex !== -1) {
+        collapseMachineDetails(expandedMachineIndex);
+    }
+    
+    // Reinitialize event listeners for machinery carousel based on new screen size
+    const machineryCarousel = document.querySelector('.machinery-carousel');
+    if (machineryCarousel) {
+        // Remove existing event listeners and add new ones based on screen size
+        machineryCarousel.removeEventListener('mouseenter', stopAutoSlide);
+        machineryCarousel.removeEventListener('mouseleave', restartAutoSlide);
+        
+        if (window.innerWidth > 768) {
+            machineryCarousel.addEventListener('mouseenter', () => {
+                if (!autoSlideBlocked) stopAutoSlide();
+            });
+            machineryCarousel.addEventListener('mouseleave', () => {
+                if (!autoSlideBlocked) restartAutoSlide();
+            });
+        }
+    }
 }
 
 // ========== HEADER SCROLL EFFECT ==========
@@ -314,7 +444,7 @@ function setupMachineryTouchEvents(carousel) {
     carousel.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
         isDragging = true;
-        stopAutoSlide();
+        if (!autoSlideBlocked) stopAutoSlide();
     });
 
     carousel.addEventListener('touchmove', (e) => {
@@ -337,7 +467,7 @@ function setupMachineryTouchEvents(carousel) {
             }
         }
         
-        restartAutoSlide();
+        if (!autoSlideBlocked) restartAutoSlide();
     });
 }
 
@@ -432,7 +562,7 @@ function handleVisibilityChange() {
         stopAutoSlide();
         stopProductAutoSlides();
     } else {
-        restartAutoSlide();
+        if (!autoSlideBlocked) restartAutoSlide();
         startProductAutoSlides();
     }
 }
